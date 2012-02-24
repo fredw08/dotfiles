@@ -1,0 +1,48 @@
+[user]
+	name = fred wong
+  email = fred.wong@athenabest.com
+
+[alias]
+  cl = clone
+  st = status
+  ci = commit
+  cia = commit -a
+  co = checkout
+  br = branch
+  bra = branch -a
+  df = diff
+  sh = show
+  re = reset
+  me = merge
+  cf = config
+  sth = stash
+
+[gui]
+  fontdiff = -family Courier -size 12 -weight normal -slant roman -underline 0 -overstrike 0
+
+[color]
+  diff = auto
+  status = auto
+  branch = auto
+  interactive = auto
+  ui = true
+  pager = true
+
+[tig]
+  show-rev-graph = yes
+  line-graphics = yes
+
+[branch]
+  autosetuprebase = always
+
+[giggle]
+	main-window-maximized = true
+	main-window-geometry = 0x0+0+0
+	history-view-vpane-position = 216
+	main-window-view = HistoryView
+	file-view-vpane-position = 578
+  file-view-hpane-position = 223
+
+[github]
+  user = fredw08
+  token = 350ce326a3fa12657f06a5257db2b9fd

@@ -1,0 +1,5 @@
+# Include new file type of ruby
+--type-add=ruby=.haml,.rake,.rsel
+
+# Always color, even piping
+--color
