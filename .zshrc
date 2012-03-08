@@ -124,6 +124,7 @@ new_hotfix () {
 
 zstyle ':completion:*:*:kill:*' menu yes select
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
+#zstyle ':completion:*:*:kill:*:processes' command 'ps xo pid,user:10,cmd | sort | ack-grep -v "sshd:|-zsh$"'
 zstyle ':completion:*:*:kill:*:processes' command 'ps xo pid,user:10,cmd | ack-grep -v "sshd:|-zsh$"'
 
 #zstyle ':completion:*:*:kill:*:processes' command 'ps --forest xo pid,user:10,cmd'
