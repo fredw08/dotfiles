@@ -61,6 +61,7 @@ alias grep='ack-grep'
 alias g='ack-grep'
 
 alias reload='source ~/.zshrc'
+alias vizsh='vi ~/.zshrc'
 
 # newly added by fred (20111007)
 function sql { psql igs_dev -c "$@" }
@@ -69,14 +70,15 @@ function sql { psql igs_dev -c "$@" }
 alias cnull='cat /dev/null > '
 
 # newly added by fred (20111128)
-function pug  { ps aux | grep "$@" }
-function pugs { ps aux | grep "$@" | sort }
+function pug  { ps xo pid,user:10,cmd | sort | grep "$@" }
 
 alias tl='tail -f log/development.log'
 alias tl10='tail log/development.log --lines=10'
 alias tl20='tail log/development.log --lines=20'
 alias tm='tmux attach || tmux new'
 alias lc='bin/rake log:clear'
+
+alias rc='rails console'
 
 #####################################################
 # git related
@@ -135,6 +137,7 @@ zstyle ':completion:*:*:kill:*:processes' command 'ps xo pid,user:10,cmd | ack-g
 #####################################################
 
 alias psqlamoebadev='psql -d amoeba_dev'
+alias psqligs='psql -d igs_dev'
 
 # newly added by fred (20111228)
 export TERM=xterm-256color

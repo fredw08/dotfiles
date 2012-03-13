@@ -46,6 +46,10 @@ syntax enable
 colorscheme fred_ir_black   " newly added by Fred (20110906)
 " colorscheme jellybeans
 
+" let g:solarized_termcolors=256
+" set background=dark
+" colorscheme solarized   " newly added by Fred (20120311)
+
 " let g:zenburn_alternate_Include = 1
 " let g:zenburn_high_Contrast = 1
 " let g:zenburn_alternate_Visual = 1
@@ -199,6 +203,8 @@ Bundle 'tpope/vim-endwise'
 Bundle 'tpope/vim-surround'
 Bundle 'Lokaltog/vim-powerline'
 Bundle 'Lokaltog/vim-easymotion'
+Bundle 'tpope/vim-commentary'
+Bundle 'altercation/vim-colors-solarized'
 
 " Bundle ''
 
