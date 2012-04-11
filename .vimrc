@@ -205,6 +205,7 @@ Bundle 'Lokaltog/vim-powerline'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'tpope/vim-commentary'
 Bundle 'altercation/vim-colors-solarized'
+Bundle 'groenewege/vim-less'
 
 " Bundle ''
 

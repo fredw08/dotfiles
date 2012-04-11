@@ -40,12 +40,12 @@ export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/ga
 # RVM
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
+# =====================================================
 # alias
+# =====================================================
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
-
-# dir
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
@@ -62,6 +62,8 @@ alias g='ack-grep'
 
 alias reload='source ~/.zshrc'
 alias vizsh='vi ~/.zshrc'
+alias vimrc='vi ~/.vimrc'
+alias vilog='vi log/development.log'
 
 # newly added by fred (20111007)
 function sql { psql igs_dev -c "$@" }
@@ -72,25 +74,37 @@ alias cnull='cat /dev/null > '
 # newly added by fred (20111128)
 function pug  { ps xo pid,user:10,cmd | sort | grep "$@" }
 
+# newly added by fred (20120405)
+function pf  { ps xo pid,user:10,cmd | sort | grep fred }
+
 alias tl='tail -f log/development.log'
 alias tl10='tail log/development.log --lines=10'
 alias tl20='tail log/development.log --lines=20'
 alias tm='tmux attach || tmux new'
+alias tml='tmux ls'
 alias lc='bin/rake log:clear'
 
 alias rc='rails console'
+alias mig='rake db:migrate'
+alias migs='rake db:migrate:status'
+alias roll='rake db:rollback'
 
 #####################################################
 # git related
 #####################################################
 alias gdh='git diff HEAD'
 alias gd='git diff'
-alias tigfred='tig --author=fred.wong'
 alias gsth='git stash list'
 alias gsths='git stash save'
 alias gsthp='git stash pop'
 alias gsthd='git stash drop'
 alias gstha='git stash apply'
+# name specific
+alias tigfred='tig --author=fred.wong'
+alias tigall='tig --all'
+alias tiggodwin='tig --author=godwin.ko'
+alias tigcalvin='tig --author=calvin.leung'
+alias tigalex='tig --author=alex.au'
 
 
 # from alex ----------------
@@ -137,7 +151,7 @@ zstyle ':completion:*:*:kill:*:processes' command 'ps xo pid,user:10,cmd | ack-g
 #####################################################
 
 alias psqlamoebadev='psql -d amoeba_dev'
-alias psqligs='psql -d igs_dev'
+alias psqligsdev='psql -d igs_dev'
 
 # newly added by fred (20111228)
 export TERM=xterm-256color
