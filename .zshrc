@@ -51,6 +51,16 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 function p { cd ~/project/$1; }
 function h { cd ~/$1; }
+
+# project related
+alias igs='p igs'
+alias satellite='p satellite'
+alias snapshot='p snapshot_tree'
+alias db='p db'
+alias cam='p amoeba.cam'
+alias ws='p amoeba.ws'
+alias amoeba='p amoeba'
+alias dotfils='p dotfiles'
  
 # newly added by fred (20110915)
 alias clr='clear'
@@ -61,9 +71,11 @@ alias grep='ack-grep'
 alias g='ack-grep'
 
 alias reload='source ~/.zshrc'
-alias vizsh='vi ~/.zshrc'
-alias vimrc='vi ~/.vimrc'
-alias vilog='vi log/development.log'
+alias v='vi'
+alias vzsh='v ~/.zshrc'
+alias vimrc='v ~/.vimrc'
+alias vtmx='v ~/.tmux.conf'
+alias vlog='v log/development.log'
 
 # newly added by fred (20111007)
 function sql { psql igs_dev -c "$@" }
@@ -82,6 +94,7 @@ alias tl10='tail log/development.log --lines=10'
 alias tl20='tail log/development.log --lines=20'
 alias tm='tmux attach || tmux new'
 alias tml='tmux ls'
+function tmk { tmux kill-session -t "$@" }
 alias lc='bin/rake log:clear'
 
 alias rc='rails console'
@@ -94,18 +107,21 @@ alias roll='rake db:rollback'
 #####################################################
 alias gdh='git diff HEAD'
 alias gd='git diff'
+alias greset='git reset --hard'
+
+# stash
 alias gsth='git stash list'
 alias gsths='git stash save'
 alias gsthp='git stash pop'
 alias gsthd='git stash drop'
 alias gstha='git stash apply'
+
 # name specific
 alias tigfred='tig --author=fred.wong'
 alias tigall='tig --all'
 alias tiggodwin='tig --author=godwin.ko'
 alias tigcalvin='tig --author=calvin.leung'
 alias tigalex='tig --author=alex.au'
-
 
 # from alex ----------------
 new_hotfix () {
