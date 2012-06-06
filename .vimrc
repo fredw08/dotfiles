@@ -93,6 +93,39 @@ let g:ackprg="ack-grep -H --nocolor --nogroup --column"
 map <leader>w <C-W>
 map <leader>e :e <C-R>=expand("%:h") . "/"<CR>
 
+" newly added at 20120510
+" ===========================================================================
+" init variable (20120515)
+let g:VimuxUseNearestPane = 0
+let g:VimuxOrientation = 'v'
+let g:VimuxHeight = '30'
+let g:VimuxResetSequence = 'q C-u'
+
+" Run the current file with rspec
+map <Leader>rb :call RunVimTmuxCommand("clear; rspec " . bufname("%"))<CR>
+
+" Prompt for a command to run
+map <Leader>rp :PromptVimTmuxCommand<CR>
+
+" Run last command executed by RunVimTmuxCommand
+map <Leader>rl :RunLastVimTmuxCommand<CR>
+
+" Inspect runner pane
+map <Leader>ri :InspectVimTmuxRunner<CR>
+
+" Close all other tmux panes in current window
+map <Leader>rx :CloseVimTmuxPanes<CR>
+
+" Close vim tmux runner opened by RunVimTmuxCommand
+map <Leader>rq :CloseVimTmuxRunner<CR>
+
+" Interrupt any command running in the runner pane
+map <Leader>rs :InterruptVimTmuxRunner<CR>
+" ===========================================================================
+
+
+:cabbrev q qa
+
 " let g:Tb_MaxSize = 0
 " let g:Tb_ModSelTarget = 1
 
@@ -175,10 +208,10 @@ au BufRead,BufNewFile *.thor set filetype=ruby
 imap ,,. <esc>dla<<esc>pa><cr></<esc>pa><esc>kJcw
 
 " newly added by Fred (20110914) - moving line ( from: http://amix.dk/vim/vimrc.html )
-nmap <C-Up>   mz:m-2<cr>`z 
-nmap <C-Down> mz:m+<cr>`z
-vmap <C-Up>   :m'<-2<cr>`>my`<mzgv`yo`z
-vmap <C-Down> :m'>+<cr>`<my`>mzgv`yo`z
+nmap <leader><Up>   mz:m-2<cr>`z
+nmap <leader><Down> mz:m+<cr>`z
+vmap <leader><Up>   :m'<-2<cr>`>my`<mzgv`yo`z
+vmap <leader><Down> :m'>+<cr>`<my`>mzgv`yo`z
 " :map <F2> :echo 'test'<CR>
 
 nnoremap <f5> :GundoToggle<cr>
@@ -194,7 +227,6 @@ Bundle 'scrooloose/nerdtree'
 Bundle 'tpope/vim-rails'
 Bundle 'git://github.com/flazz/vim-colorschemes.git'
 Bundle 'git://github.com/chrismetcalf/vim-yankring.git'
-Bundle 'git://github.com/msanders/snipmate.vim.git'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'git://github.com/vim-scripts/taglist.vim.git'
 Bundle 'tpope/vim-unimpaired'
@@ -206,7 +238,8 @@ Bundle 'Lokaltog/vim-easymotion'
 Bundle 'tpope/vim-commentary'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'groenewege/vim-less'
-
-" Bundle ''
-
+Bundle 'benmills/vimux'
+Bundle 'pgr0ss/vimux-ruby-test'
+Bundle 'fholgado/minibufexpl.vim'
+Bundle 'tpope/vim-fugitive'
 

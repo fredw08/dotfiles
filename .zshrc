@@ -29,8 +29,9 @@ DISABLE_AUTO_UPDATE="true"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git ruby)
-# plugins=(git ruby vi-mode)
+# plugins=(git ruby rails3)
+plugins=(bundler debian git ruby rails3 rvm thor ssh-agent)
+bindkey -v
 
 source $ZSH/oh-my-zsh.sh
 
@@ -54,21 +55,24 @@ function h { cd ~/$1; }
 
 # project related
 alias igs='p igs'
+alias igshk='p igshk'
 alias satellite='p satellite'
 alias snapshot='p snapshot_tree'
 alias db='p db'
 alias cam='p amoeba.cam'
 alias ws='p amoeba.ws'
 alias amoeba='p amoeba'
-alias dotfils='p dotfiles'
+alias dotfiles='p dotfiles'
  
 # newly added by fred (20110915)
 alias clr='clear'
 function cc { wget -qO- "http://www.google.com/finance/converter?a=$1&from=$2&to=$3" | sed '/res/!d;s/<[^>]*>//g'; }
     
 # newly added by fred (20110920)
-alias grep='ack-grep'
-alias g='ack-grep'
+alias grep='ack-grep -i'
+alias gg='grep'
+alias ackri='gg'
+function ff { if [ $1 ] ; then find . -type f | gg $1 ; fi }
 
 alias reload='source ~/.zshrc'
 alias v='vi'
@@ -87,7 +91,7 @@ alias cnull='cat /dev/null > '
 function pug  { ps xo pid,user:10,cmd | sort | grep "$@" }
 
 # newly added by fred (20120405)
-function pf  { ps xo pid,user:10,cmd | sort | grep fred }
+function pf  { ps xo pid,user:10,cmd | grep fred | grep -v zsh }
 
 alias tl='tail -f log/development.log'
 alias tl10='tail log/development.log --lines=10'
@@ -96,6 +100,10 @@ alias tm='tmux attach || tmux new'
 alias tml='tmux ls'
 function tmk { tmux kill-session -t "$@" }
 alias lc='bin/rake log:clear'
+
+# for pair session
+alias pair-a='tmux -S /tmp/pair a'
+function pair-c { tmux -S /tmp/pair new && chmod 777 /tmp/pair }
 
 alias rc='rails console'
 alias mig='rake db:migrate'
@@ -157,7 +165,7 @@ new_hotfix () {
 zstyle ':completion:*:*:kill:*' menu yes select
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 #zstyle ':completion:*:*:kill:*:processes' command 'ps xo pid,user:10,cmd | sort | ack-grep -v "sshd:|-zsh$"'
-zstyle ':completion:*:*:kill:*:processes' command 'ps xo pid,user:10,cmd | ack-grep -v "sshd:|-zsh$"'
+zstyle ':completion:*:*:kill:*:processes' command "ps xo pid,user:10,cmd | ack-grep -v zsh"
 
 #zstyle ':completion:*:*:kill:*:processes' command 'ps --forest xo pid,user:10,cmd'
 #zstyle ':completion:*:*:kill:*:processes' command 'ps --forest -A -o pid,user,cmd'
@@ -172,6 +180,10 @@ alias psqligsdev='psql -d igs_dev'
 # newly added by fred (20111228)
 export TERM=xterm-256color
 function tig { TERM=screen-256color /usr/bin/tig $@ }
+
+alias ku='[[ -f tmp/pids/unicorn.pid ]] && kill `cat tmp/pids/unicorn.pid`'
+#alias u='[[ -f config/unicorn.rb ]] && RAILS_RELATIVE_URL_ROOT=/`basename $PWD` _run-with-bundler unicorn -c $PWD/config/unicorn.rb -D'
+alias ru='ku && bin/s'
 
 # default cluster port
 export PGPORT=5434 
