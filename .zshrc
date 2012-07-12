@@ -42,6 +42,11 @@ export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/ga
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
 # =====================================================
+# global alias
+# =====================================================
+alias -g M=' | more'
+
+# =====================================================
 # alias
 # =====================================================
 alias ll='ls -alF'
@@ -62,6 +67,7 @@ alias db='p db'
 alias cam='p amoeba.cam'
 alias ws='p amoeba.ws'
 alias amoeba='p amoeba'
+alias uat='p amoeba_uat'
 alias dotfiles='p dotfiles'
  
 # newly added by fred (20110915)
@@ -99,11 +105,26 @@ alias tl20='tail log/development.log --lines=20'
 alias tm='tmux attach || tmux new'
 alias tml='tmux ls'
 function tmk { tmux kill-session -t "$@" }
-alias lc='bin/rake log:clear'
+alias lc='rake log:clear'
 
 # for pair session
 alias pair-a='tmux -S /tmp/pair a'
-function pair-c { tmux -S /tmp/pair new && chmod 777 /tmp/pair }
+alias pair-c='tmux -S /tmp/pair new'
+# function pair-c { tmux -S /tmp/pair new && chmod 777 /tmp/pair }
+# function pair-c { tmux -S /tmp/pair new }
+
+txpair() {
+  if ! tmux -S /tmp/pair has-session -t pair 2> /dev/null; then
+    tmux -S /tmp/pair new -s pair -d;
+    tmux -S /tmp/pair send-keys -t pair:0.0 "chmod 1777 /tmp/pair" C-m "clear" C-m;
+  fi
+  tmux -S /tmp/pair attach -t pair;
+}
+
+alias 3620A='ssh 3620A'
+alias 3620B='ssh 3620B'
+alias 3620C='ssh 3620C'
+alias 7945A='ssh 7945A'
 
 alias rc='rails console'
 alias mig='rake db:migrate'
@@ -116,6 +137,8 @@ alias roll='rake db:rollback'
 alias gdh='git diff HEAD'
 alias gd='git diff'
 alias greset='git reset --hard'
+alias grpo='git remote prune origin'
+alias glog="git log --graph --pretty=\"format:%C(yellow)%h%Cblue%d%Creset %s %C(green) %an, %ar%Creset\""
 
 # stash
 alias gsth='git stash list'
@@ -123,6 +146,7 @@ alias gsths='git stash save'
 alias gsthp='git stash pop'
 alias gsthd='git stash drop'
 alias gstha='git stash apply'
+function gsthw { git stash show stash@\{$@\} -p }
 
 # name specific
 alias tigfred='tig --author=fred.wong'

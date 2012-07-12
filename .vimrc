@@ -25,6 +25,7 @@ set nocursorline
 set virtualedit=all
 set nostartofline
 set showmode 
+" set hlsearch
 
 " pathogen must be invoke before filetype plugin indent on
 filetype off
