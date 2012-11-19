@@ -34,3 +34,5 @@ end
 def clr
   system('clear')
 end
+
+(ActiveRecord::Base.logger = Logger.new(STDOUT)) rescue nil

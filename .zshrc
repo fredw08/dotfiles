@@ -61,6 +61,7 @@ function h { cd ~/$1; }
 # project related
 alias igs='p igs'
 alias igshk='p igshk'
+alias igshkfront='p igshkfrontend'
 alias satellite='p satellite'
 alias snapshot='p snapshot_tree'
 alias db='p db'
@@ -82,10 +83,13 @@ function ff { if [ $1 ] ; then find . -type f | gg $1 ; fi }
 
 alias reload='source ~/.zshrc'
 alias v='vi'
+alias vread='vi -R'
+alias vd='vi -d'
 alias vzsh='v ~/.zshrc'
 alias vimrc='v ~/.vimrc'
 alias vtmx='v ~/.tmux.conf'
 alias vlog='v log/development.log'
+alias vt='v -c :CommandT'
 
 # newly added by fred (20111007)
 function sql { psql igs_dev -c "$@" }
@@ -106,6 +110,7 @@ alias tm='tmux attach || tmux new'
 alias tml='tmux ls'
 function tmk { tmux kill-session -t "$@" }
 alias lc='rake log:clear'
+alias vl='vi log/development.log'
 
 # for pair session
 alias pair-a='tmux -S /tmp/pair a'
@@ -130,6 +135,9 @@ alias rc='rails console'
 alias mig='rake db:migrate'
 alias migs='rake db:migrate:status'
 alias roll='rake db:rollback'
+
+# zeus related
+alias z='zeus'
 
 #####################################################
 # git related
@@ -156,35 +164,41 @@ alias tigcalvin='tig --author=calvin.leung'
 alias tigalex='tig --author=alex.au'
 
 # from alex ----------------
-new_hotfix () {
-  echo -n "Self create? "   
-  read SELF_CREATE
-  if [[ $SELF_CREATE =~ "y|Y|yes|Yes" ]]; then
-    SELF_CREATE=true
-  else
-    SELF_CREATE=false
-  fi
-  echo -n "Old hotfix branch: "
-  read OLD_HOTFIX
-  echo -n "New hotfix branch: "
-  read NEW_HOTFIX
+# new_hotfix () {
+#   echo -n "Self create? "
+#   read SELF_CREATE
+#   if [[ $SELF_CREATE =~ "y|Y|yes|Yes" ]]; then
+#     SELF_CREATE=true
+#   else
+#     SELF_CREATE=false
+#   fi
+#   echo -n "Old hotfix branch: "
+#   read OLD_HOTFIX
+#   echo -n "New hotfix branch: "
+#   read NEW_HOTFIX
 
-  if [[ $SELF_CREATE == true ]]; then
-    git flow hotfix start $NEW_HOTFIX
-    git push origin hotfix/$NEW_HOTFIX
-    git push origin :hotfix/$$OLD_HOTFIX
-    git branch --set-upstream hotfix/$NEW_HOTFIX origin/hotfix/$NEW_HOTFIX
-  else
-    git checkout develop && git pull
-    git checkout master && git pull
-    git branch -d hotfix/$OLD_HOTFIX
-    git branch --set-upstream hotfix/$NEW_HOTFIX origin/hotfix/$NEW_HOTFIX
-    git remote prune origin
-    git checkout hotfix/$NEW_HOTFIX
-  fi
-  echo -n "Done!"
-}
+#   if [[ $SELF_CREATE == true ]]; then
+#     git flow hotfix start $NEW_HOTFIX
+#     git push origin hotfix/$NEW_HOTFIX
+#     git push origin :hotfix/$$OLD_HOTFIX
+#     git branch --set-upstream hotfix/$NEW_HOTFIX origin/hotfix/$NEW_HOTFIX
+#   else
+#     git checkout develop && git pull
+#     git checkout master && git pull
+#     git branch -d hotfix/$OLD_HOTFIX
+#     git branch --set-upstream hotfix/$NEW_HOTFIX origin/hotfix/$NEW_HOTFIX
+#     git remote prune origin
+#     git checkout hotfix/$NEW_HOTFIX
+#   fi
+#   echo -n "Done!"
+# }
 # --------------- end from alex
+
+# refresh db
+# refreshdb () {
+#   pg_dump -c -h 3620C -p 5433 -T fund_prices    -T snapshot_portfolios -U athenabest amoeba | psql -d amoeba_dev
+#   pg_dump -c -h 3620C -p 5433 -s -t fund_prices -t snapshot_portfolios -U athenabest amoeba | psql -d amoeba_dev
+# }
 
 zstyle ':completion:*:*:kill:*' menu yes select
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
@@ -193,6 +207,9 @@ zstyle ':completion:*:*:kill:*:processes' command "ps xo pid,user:10,cmd | ack-g
 
 #zstyle ':completion:*:*:kill:*:processes' command 'ps --forest xo pid,user:10,cmd'
 #zstyle ':completion:*:*:kill:*:processes' command 'ps --forest -A -o pid,user,cmd'
+
+# bundle editor
+export BUNDLER_EDITOR="vi"
 
 #####################################################
 # specific for amoebaba
@@ -219,5 +236,62 @@ export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
 export RUBY_GC_MALLOC_LIMIT=1000000000
 export RUBY_HEAP_FREE_MIN=500000
 
+#####################################################
+# copy from alex (20120813)
+#####################################################
+hotfiz() {
+  echo "You prepare the deployment? (Y/N) "
+  read prepare
 
+  if [[ $prepare =~ "y|Y|yes|Yes" ]]; then
+    echo "Old hotfix branch: "
+    read OLD_HOTFIX
+    OLD=(${(s:/:)OLD_HOTFIX})
+    OLD_VERSION=$OLD[2]
+    echo "New hotfix branch: "
+    read NEW_HOTFIX
+
+    git pull --rebase
+    git checkout master
+    git pull
+    git merge --no-ff $OLD_HOTFIX
+    ./bump-version
+    git add VERSION
+    git commit -m "Bump version to $OLD_VERSION"
+    git tag $OLD_VERSION
+    git branch $NEW_HOTFIX
+    git branch -d $OLD_HOTFIX
+    git checkout $NEW_HOTFIX
+    clear
+    git branch -a
+
+    echo "Push to remote? (Y/N) "
+    read push
+    if [[ $push =~ "y|Y|yes|Yes" ]]; then
+      git push
+      git push --tags
+      git push origin $NEW_HOTFIX
+      git push origin :$OLD_HOTFIX
+      git branch --set-upstream $NEW_HOTFIX origin/$NEW_HOTFIX
+    fi
+  else
+    echo "Old hotfix branch: "
+    read OLD_HOTFIX
+    echo "New hotfix branch: "
+    read NEW_HOTFIX
+
+    git stash save 'Temp. storage for hotfiz'
+    git checkout master
+    git pull
+    git branch -t $NEW_HOTFIX origin/$NEW_HOTFIX
+    git branch -d $OLD_HOTFIX
+    git remote prune origin
+    git checkout $NEW_HOTFIX
+    git stash pop
+    clear
+    git branch -a
+  fi
+
+  echo -n "Done!"
+}
 

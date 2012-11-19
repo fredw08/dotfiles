@@ -126,6 +126,7 @@ map <Leader>rs :InterruptVimTmuxRunner<CR>
 
 
 :cabbrev q qa
+:cabbrev dt diffthis
 
 " let g:Tb_MaxSize = 0
 " let g:Tb_ModSelTarget = 1
@@ -243,4 +244,3 @@ Bundle 'benmills/vimux'
 Bundle 'pgr0ss/vimux-ruby-test'
 Bundle 'fholgado/minibufexpl.vim'
 Bundle 'tpope/vim-fugitive'
-
