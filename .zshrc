@@ -55,6 +55,8 @@ alias l='ls -CF'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
+alias .....='cd ../../../..'
+alias ......='cd ../../../../..'
 function p { cd ~/project/$1; }
 function h { cd ~/$1; }
 
@@ -63,6 +65,7 @@ alias igs='p igs'
 alias igshk='p igshk'
 alias igshkfront='p igshkfrontend'
 alias satellite='p satellite'
+alias play='p play'
 alias snapshot='p snapshot_tree'
 alias db='p db'
 alias cam='p amoeba.cam'
@@ -96,6 +99,7 @@ function sql { psql igs_dev -c "$@" }
 
 # from Calvin
 alias cnull='cat /dev/null > '
+alias cn='cnull'
 
 # newly added by fred (20111128)
 function pug  { ps xo pid,user:10,cmd | sort | grep "$@" }
@@ -110,6 +114,7 @@ alias tm='tmux attach || tmux new'
 alias tml='tmux ls'
 function tmk { tmux kill-session -t "$@" }
 alias lc='rake log:clear'
+alias cl='cn log/development.log'
 alias vl='vi log/development.log'
 
 # for pair session
@@ -146,7 +151,8 @@ alias gdh='git diff HEAD'
 alias gd='git diff'
 alias greset='git reset --hard'
 alias grpo='git remote prune origin'
-alias glog="git log --graph --pretty=\"format:%C(yellow)%h%Cblue%d%Creset %s %C(green) %an, %ar%Creset\""
+# alias glog="git log --graph --pretty=\"format:%C(yellow)%h%Cblue%d%Creset %s %C(green) %an, %ar%Creset\""
+alias glog="git log --graph --full-history --all --color --pretty=format:\"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s\""
 
 # stash
 alias gsth='git stash list'
