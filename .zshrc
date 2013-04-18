@@ -71,6 +71,8 @@ alias db='p db'
 alias cam='p amoeba.cam'
 alias ws='p amoeba.ws'
 alias amoeba='p amoeba'
+alias amoeba_2='p amoeba_2'
+alias amoeba2='p amoeba_2'
 alias uat='p amoeba_uat'
 alias dotfiles='p dotfiles'
  
