@@ -30,16 +30,21 @@ DISABLE_AUTO_UPDATE="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # plugins=(git ruby rails3)
-plugins=(bundler debian git ruby rails3 rvm thor ssh-agent)
+plugins=(bundler debian git ruby rails thor ssh-agent)
 bindkey -v
 
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
-export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/home/fred/.rvm/bin
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games # :/home/fred/.rvm/bin
 
 # RVM
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+# [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+# Chruby
+source /usr/local/share/chruby/chruby.sh
+source /usr/local/share/chruby/auto.sh
+chruby 1.9.3-p392-perf
 
 # =====================================================
 # global alias
@@ -63,6 +68,10 @@ function h { cd ~/$1; }
 # project related
 alias igs='p igs'
 alias igshk='p igshk'
+alias nerv='p nerv'
+alias nerv2='p nerv2'
+alias caas='p caas'
+alias nervapi='p nerv-api'
 alias igshkfront='p igshkfrontend'
 alias satellite='p satellite'
 alias play='p play'
@@ -75,6 +84,7 @@ alias amoeba_2='p amoeba_2'
 alias amoeba2='p amoeba_2'
 alias uat='p amoeba_uat'
 alias dotfiles='p dotfiles'
+alias envtest='RAILS_ENV=test'
  
 # newly added by fred (20110915)
 alias clr='clear'
@@ -103,6 +113,9 @@ function sql { psql igs_dev -c "$@" }
 alias cnull='cat /dev/null > '
 alias cn='cnull'
 
+# newly added (20130508)
+alias cr='chruby'
+
 # newly added by fred (20111128)
 function pug  { ps xo pid,user:10,cmd | sort | grep "$@" }
 
@@ -121,14 +134,11 @@ alias vl='vi log/development.log'
 
 # for pair session
 alias pair-a='tmux -S /tmp/pair a'
-alias pair-c='tmux -S /tmp/pair new'
-# function pair-c { tmux -S /tmp/pair new && chmod 777 /tmp/pair }
-# function pair-c { tmux -S /tmp/pair new }
-
-txpair() {
+# alias pair-c='tmux -S /tmp/pair new'
+pair-c() {
   if ! tmux -S /tmp/pair has-session -t pair 2> /dev/null; then
     tmux -S /tmp/pair new -s pair -d;
-    tmux -S /tmp/pair send-keys -t pair:0.0 "chmod 1777 /tmp/pair" C-m "clear" C-m;
+    tmux -S /tmp/pair send-keys -t pair:1.1 "chmod 1777 /tmp/pair" C-m "clear" C-m;
   fi
   tmux -S /tmp/pair attach -t pair;
 }
@@ -153,6 +163,7 @@ alias gdh='git diff HEAD'
 alias gd='git diff'
 alias greset='git reset --hard'
 alias grpo='git remote prune origin'
+alias gcom='git checkout master'
 # alias glog="git log --graph --pretty=\"format:%C(yellow)%h%Cblue%d%Creset %s %C(green) %an, %ar%Creset\""
 alias glog="git log --graph --full-history --all --color --pretty=format:\"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s\""
 
@@ -170,6 +181,8 @@ alias tigall='tig --all'
 alias tiggodwin='tig --author=godwin.ko'
 alias tigcalvin='tig --author=calvin.leung'
 alias tigalex='tig --author=alex.au'
+alias tignash='tig --author=nash.yeung'
+alias tigsk='tig --author=sk.owyong'
 
 # from alex ----------------
 # new_hotfix () {
@@ -234,8 +247,14 @@ alias ku='[[ -f tmp/pids/unicorn.pid ]] && kill `cat tmp/pids/unicorn.pid`'
 #alias u='[[ -f config/unicorn.rb ]] && RAILS_RELATIVE_URL_ROOT=/`basename $PWD` _run-with-bundler unicorn -c $PWD/config/unicorn.rb -D'
 alias ru='ku && bin/s'
 
+# puma
+alias kpu='[[ -f tmp/pids/puma.pid ]] && kill `cat tmp/pids/puma.pid`'
+#alias spu='bundle exec puma -C config/puma.rb config.ru'
+alias spu='RAILS_RELATIVE_URL_ROOT=/nerv bundle exec puma -d -C config/puma.rb config.ru'
+alias spu2='RAILS_RELATIVE_URL_ROOT=/nerv2 bundle exec puma -d -C config/puma.rb config.ru'
+
 # default cluster port
-export PGPORT=5434 
+# export PGPORT=5434 
 
 # newly added by fred (20120131) - for ruby performance
 export RUBY_HEAP_MIN_SLOTS=1000000

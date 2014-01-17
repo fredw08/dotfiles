@@ -20,7 +20,8 @@ set hidden
 set title
 set scrolloff=2
 set smartindent
-set nocursorline
+" set cursorline
+" set nocursorline
 " set cursorcolumn
 set virtualedit=all
 set nostartofline
@@ -131,8 +132,8 @@ map <Leader>rs :InterruptVimTmuxRunner<CR>
 " let g:Tb_MaxSize = 0
 " let g:Tb_ModSelTarget = 1
 
-let g:yankring_history_dir = '~/.vim'
-let g:yankring_map_dot = 0
+"let g:yankring_history_dir = '~/.vim'
+"let g:yankring_map_dot = 0
 nmap <leader>y :YRShow<cr>
 
 let NERDSpaceDelims = 1
@@ -218,24 +219,32 @@ vmap <leader><Down> :m'>+<cr>`<my`>mzgv`yo`z
 
 nnoremap <f5> :GundoToggle<cr>
 
+" newly added by Fred (20130516)
+"autocmd VimEnter * IndentGuidesToggle
+"let g:indent_guides_auto_colors = 0
+"let g:indent_guides_guide_size  = 1
+"let g:indent_guides_start_level = 2
+"hi IndentGuidesOdd  ctermbg=none
+"hi IndentGuidesEven ctermbg=17
+
 " newly added by Fred (20111010)
 set rtp+=~/.vim/bundle/vundle
 call vundle#rc()
 
 Bundle 'gmarik/vundle'
-Bundle 'vim-scripts/Gundo'
+" Bundle 'vim-scripts/Gundo'
 Bundle 'wincent/Command-T'
 Bundle 'scrooloose/nerdtree'
 Bundle 'tpope/vim-rails'
 Bundle 'git://github.com/flazz/vim-colorschemes.git'
-Bundle 'git://github.com/chrismetcalf/vim-yankring.git'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'git://github.com/vim-scripts/taglist.vim.git'
 Bundle 'tpope/vim-unimpaired'
 Bundle 'tpope/vim-haml'
 Bundle 'tpope/vim-endwise'
 Bundle 'tpope/vim-surround'
-Bundle 'Lokaltog/vim-powerline'
+" Bundle 'Lokaltog/vim-powerline'
+Bundle 'bling/vim-airline'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'tpope/vim-commentary'
 Bundle 'altercation/vim-colors-solarized'
@@ -244,3 +253,7 @@ Bundle 'benmills/vimux'
 Bundle 'pgr0ss/vimux-ruby-test'
 Bundle 'fholgado/minibufexpl.vim'
 Bundle 'tpope/vim-fugitive'
+" Bundle 'nathanaelkane/vim-indent-guides'
+Bundle 'vim-scripts/YankRing.vim'
+Bundle 'epeli/slimux'
+Bundle 'slim-template/vim-slim'
