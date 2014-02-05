@@ -44,7 +44,8 @@ export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/ga
 # Chruby
 source /usr/local/share/chruby/chruby.sh
 source /usr/local/share/chruby/auto.sh
-chruby 1.9.3-p392-perf
+# chruby 1.9.3-p392-perf
+chruby 2.0.0-p247
 
 # =====================================================
 # global alias
@@ -84,7 +85,9 @@ alias amoeba_2='p amoeba_2'
 alias amoeba2='p amoeba_2'
 alias uat='p amoeba_uat'
 alias dotfiles='p dotfiles'
-alias envtest='RAILS_ENV=test'
+alias et='RAILS_ENV=test'
+alias rruby='rescue=1 ruby'
+alias -g R='rescue=1'
  
 # newly added by fred (20110915)
 alias clr='clear'
@@ -122,6 +125,7 @@ function pug  { ps xo pid,user:10,cmd | sort | grep "$@" }
 # newly added by fred (20120405)
 function pf  { ps xo pid,user:10,cmd | grep fred | grep -v zsh }
 
+# alias tmux='/home/godwin.ko/bin/tmux'
 alias tl='tail -f log/development.log'
 alias tl10='tail log/development.log --lines=10'
 alias tl20='tail log/development.log --lines=20'
@@ -151,6 +155,8 @@ alias 7945A='ssh 7945A'
 alias rc='rails console'
 alias mig='rake db:migrate'
 alias migs='rake db:migrate:status'
+alias rmg='mig'
+alias rmgs='migs'
 alias roll='rake db:rollback'
 
 # zeus related
@@ -176,6 +182,7 @@ alias gstha='git stash apply'
 function gsthw { git stash show stash@\{$@\} -p }
 
 # name specific
+function tig { TERM=screen-256color /usr/bin/tig $@ }
 alias tigfred='tig --author=fred.wong'
 alias tigall='tig --all'
 alias tiggodwin='tig --author=godwin.ko'
@@ -240,8 +247,7 @@ alias psqlamoebadev='psql -d amoeba_dev'
 alias psqligsdev='psql -d igs_dev'
 
 # newly added by fred (20111228)
-export TERM=xterm-256color
-function tig { TERM=screen-256color /usr/bin/tig $@ }
+# export TERM=xterm-256color
 
 alias ku='[[ -f tmp/pids/unicorn.pid ]] && kill `cat tmp/pids/unicorn.pid`'
 #alias u='[[ -f config/unicorn.rb ]] && RAILS_RELATIVE_URL_ROOT=/`basename $PWD` _run-with-bundler unicorn -c $PWD/config/unicorn.rb -D'
