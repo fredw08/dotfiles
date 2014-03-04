@@ -8,16 +8,17 @@ set shiftwidth=2
 set nobackup
 set nowritebackup
 set showmatch
+if exists("&relativenumber") | set relativenumber | endif
 set number
 set expandtab
 set smarttab
 set nowrap
 set backspace=2
 set incsearch
-set nohlsearch
+" set nohlsearch
 set ignorecase
 set smartcase
-set ruler
+" set ruler
 set laststatus=2
 set hidden
 set title
@@ -25,7 +26,7 @@ set scrolloff=2
 set smartindent
 set virtualedit=all
 set nostartofline
-set showmode 
+set showmode
 set history=1000
 set undolevels=1000
 set mousehide
@@ -33,17 +34,32 @@ set mouse=a
 set listchars=tab:>-,trail:.,eol:$
 set grepprg=ack
 set grepformat=%f:%l:%m
+set encoding=utf-8
 
 " -- plugin setting
 let g:ackprg="ack-grep -H --nocolor --nogroup --column"
 let NERDSpaceDelims = 1
 let Tlist_GainFocus_On_ToggleOpen = 1
+" let g:airline#extensions#tabline#enabled = 1
+" let g:airline#extensions#tabline#buffer_nr_show = 1
+" let g:airline#extensions#tabline#fnamecollapse = 0
+" let g:airline#extensions#tabline#fnamemod = ':p:t:.'
+let g:airline_theme='bubblegum'
+
+" -- override default ignore comment and string in vim-easy-align
+" let g:easy_align_ignore_groups = ['Comment', 'String'] "<--- original
+let g:easy_align_ignore_groups = []
+
+" -- CtrlP searching setting
+let g:ctrlp_match_window      = 'bottom,order:ttb'
+let g:ctrlp_switch_buffer     = 0
+let g:ctrlp_working_path_mode = 0
+let g:ctrlp_user_command      = 'ag %s -l --nocolor --hidden -g ""'
 
 " -- vundle setting
 set rtp+=~/.vim/bundle/vundle
 call vundle#rc()
 
-au BufRead,BufNewFile *.thor set filetype=ruby
 " set hlsearch
 " set cursorline
 " set nocursorline
@@ -51,18 +67,40 @@ au BufRead,BufNewFile *.thor set filetype=ruby
 " set t_Co=256
 
 " -------------------
+" Pathogen
+" -------------------
+" pathogen must be invoke before filetype plugin indent on
+filetype off
+call pathogen#runtime_append_all_bundles()
+call pathogen#helptags()
+filetype plugin indent on
+
+" -------------------
+" autocmd
+" -------------------
+autocmd BufRead,BufNewFile *.thor set filetype=ruby
+autocmd BufWritePre * :%s/\s\+$//e
+
+" -------------------
 " Keyboard
 " -------------------
 let mapleader = ","
 
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
 map <leader>w <C-W>
 map <leader>e :e <C-R>=expand("%:h") . "/"<CR>
 map <leader>d :execute 'NERDTreeToggle'<CR>
 map <leader>g :execute 'NERDTreeFind'<CR>
 map <leader>c :TlistToggle<CR>
+" map <leader><space> :%s/\s\+$//e<cr>
+" nmap <leader><space> :call whitespace#strip_trailing()<CR>
 
 nmap <silent> <leader>s :set nolist!<CR>
-nmap <silent> <leader>n :set number!<CR>
+nmap <silent> <leader>N :set nonumber!<CR>:set norelativenumber!<CR>
+nmap <silent> <leader>n :call ToggleNumber()<CR>
 nmap <silent> <tab>   :bn<CR>
 nmap <silent> <s-tab> :bp<CR>
 nmap ]]] i@@@<esc>hhkyWjl?@@@<cr>P/\@\@\@<cr>3s
@@ -117,6 +155,7 @@ nmap <Leader>a <Plug>(EasyAlign)
 " Slimux
 " -------------------
 nmap <Leader>rb :SlimuxShellRun ruby -Itest <C-R>=expand("%:f")<CR><CR>
+" nmap <Leader>rb :SlimuxShellRun rspec <C-R>=expand("%:f")<CR><CR>
 nmap <Leader>rl :SlimuxShellLast<CR>
 nmap <Leader>rc :SlimuxShellConfigure<CR>
 
@@ -150,47 +189,30 @@ augroup JumpCursorOnEdit
 augroup END
 
 " -------------------
-" Pathogen
-" -------------------
-" pathogen must be invoke before filetype plugin indent on
-filetype off
-call pathogen#runtime_append_all_bundles()
-call pathogen#helptags()
-filetype plugin indent on
-
-" -------------------
 " Text color
 " -------------------
 syntax enable
-colorscheme kolor
+colorscheme kolor "badwolf
 set background=light
 " set background=dark
 " colorscheme solarized
-" colorscheme dark-ruby
-" colorscheme vibrantink
-" colorscheme molokai
-" colorscheme vividchalk
-"colorscheme mustang
-" colorscheme ir_black
 " colorscheme fred_ir_black   " newly added by Fred (20110906)
-" colorscheme jellybeans
-" set background=dark
-" " let g:solarized_termcolors=256
-" let g:solarized_visibility = "high"
-" let g:solarized_contrast = "high"
-" let g:solarized_termtrans = 1
-" colorscheme solarized   " newly added by Fred (20120311)
-" let g:zenburn_alternate_Include = 1
-" let g:zenburn_high_Contrast = 1
-" let g:zenburn_alternate_Visual = 1
-" let g:zenburn_alternate_Error = 1
-" colorscheme zenburn
+
+" -------------------
+" Special for minibufexpl
+" -------------------
+" hi MBEVisibleActive        guifg=#A6DB29 guibg=fg
+" hi MBEVisibleChangedActive guifg=#F1266F guibg=fg
+" hi MBEVisibleChanged       guifg=#F1266F guibg=fg
+" hi MBEVisibleNormal        guifg=#5DC2D6 guibg=fg
+" hi MBEChanged              guifg=#CD5907 guibg=fg
+" hi MBENormal               guifg=#808080 guibg=fg
 
 " -------------------
 " Vundle Plugins
 " -------------------
 Bundle 'gmarik/vundle'
-Bundle 'vim-scripts/YankRing.vim'
+" Bundle 'vim-scripts/YankRing.vim'
 
 " --- tpope + code editing
 Bundle 'tpope/vim-rails'
@@ -199,9 +221,10 @@ Bundle 'tpope/vim-endwise'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-commentary'
+Bundle 'tpope/vim-repeat'
 Bundle 'junegunn/vim-easy-align'
 Bundle 'michaeljsmith/vim-indent-object'
-Bundle 'square/maximum-awesome'
+" Bundle 'square/maximum-awesome'
 Bundle 'tmhedberg/matchit'
 
 " --- status
@@ -210,17 +233,20 @@ Bundle 'bling/vim-airline'
 " --- navigation
 Bundle 'git://github.com/vim-scripts/taglist.vim.git'
 Bundle 'Lokaltog/vim-easymotion'
-Bundle 'wincent/Command-T'
+Bundle 'kien/ctrlp.vim'
 Bundle 'scrooloose/nerdtree'
-Bundle 'fholgado/minibufexpl.vim'
 Bundle 'epeli/slimux'
+Bundle 'christoomey/vim-tmux-navigator'
 
 " --- syntax highlight
 Bundle 'git://github.com/flazz/vim-colorschemes.git'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'groenewege/vim-less'
 Bundle 'slim-template/vim-slim'
+Bundle 'fholgado/minibufexpl.vim'
 
+" Bundle 'chrisbra/changesPlugin'
+" Bundle 'wincent/Command-T'
 " Bundle 'benmills/vimux'
 " Bundle 'pgr0ss/vimux-ruby-test'
 " Bundle 'tpope/vim-unimpaired'
@@ -233,86 +259,16 @@ Bundle 'slim-template/vim-slim'
 " For Pair session
 " -------------------
 " share vim settings
-if $TMUX =~ "/tmp/pair"
+if $TMUX =~ "pair"
   source /home/share/vimrc.share
 endif
 
-" -------------------
-" tmux (Vimux)
-" -------------------
-" let g:VimuxUseNearestPane = 0
-" let g:VimuxOrientation = 'v'
-" let g:VimuxHeight = '30'
-" let g:VimuxResetSequence = 'q C-u'
-
-" Run the current file with rspec
-" map <Leader>rb :call RunVimTmuxCommand("clear; rspec " . bufname("%"))<CR>
-
-" Prompt for a command to run
-" map <Leader>rp :PromptVimTmuxCommand<CR>
-
-" Run last command executed by RunVimTmuxCommand
-" map <Leader>rl :RunLastVimTmuxCommand<CR>
-
-" Inspect runner pane
-" map <Leader>ri :InspectVimTmuxRunner<CR>
-
-" Close all other tmux panes in current window
-" map <Leader>rx :CloseVimTmuxPanes<CR>
-
-" Close vim tmux runner opened by RunVimTmuxCommand
-" map <Leader>rq :CloseVimTmuxRunner<CR>
-
-" Interrupt any command running in the runner pane
-" map <Leader>rs :InterruptVimTmuxRunner<CR>
-
-
-" let g:Tb_MaxSize = 0
-" let g:Tb_ModSelTarget = 1
-
-"let g:yankring_history_dir = '~/.vim'
-"let g:yankring_map_dot = 0
-
-" map <leader>b :TMiniBufExplorer<CR>
-" let g:miniBufExplMapWindowNavVim = 1
-" let g:miniBufExplMapWindowNavArrows = 1
-" let g:miniBufExplMapCTabSwitchBufs = 1
-" let g:miniBufExplModSelTarget = 1
-
-" !!! === unknown buy commented ( 20140204 )
-" set guifont=DejaVu\ Sans\ Mono\ 9
-" if has("gui_running")
-"   set lines=48 columns=120
-"   winpos 150 60
-" endif
- 
-" Protect large files from sourcing and other overhead.
-" Files become read only
-" if !exists("my_auto_commands_loaded")
-"   let my_auto_commands_loaded = 1
-"   " Large files are > 10M
-"   " Set options:
-"   " eventignore+=FileType (no syntax highlighting etc
-"   " assumes FileType always on)
-"   " noswapfile (save copy of file)
-"   " bufhidden=unload (save memory when other file is viewed)
-"   " buftype=nowritefile (is read-only)
-"   " undolevels=-1 (no undo possible)
-"   let g:LargeFile = 1024 * 1024 * 2
-"   augroup LargeFile
-"     autocmd BufReadPre * let f=expand("<afile>") | if getfsize(f) > g:LargeFile | set eventignore+=FileType | setlocal noswapfile bufhidden=unload buftype=nowrite undolevels=-1 | else | set eventignore-=FileType | endif
-"   augroup END
-" endif
-" !!! == end of comment
-
-" newly added by Fred (20110914) - moving line ( from: http://amix.dk/vim/vimrc.html )
-" :map <F2> :echo 'test'<CR>
-
-" newly added by Fred (20130516)
-"autocmd VimEnter * IndentGuidesToggle
-"let g:indent_guides_auto_colors = 0
-"let g:indent_guides_guide_size  = 1
-"let g:indent_guides_start_level = 2
-"hi IndentGuidesOdd  ctermbg=none
-"hi IndentGuidesEven ctermbg=17
-
+" toggle between number and relativenumber
+function! ToggleNumber()
+    if(&relativenumber && &relativenumber == 1)
+      set norelativenumber
+      set number
+    else
+      set relativenumber
+    endif
+endfunction
