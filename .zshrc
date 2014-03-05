@@ -102,10 +102,12 @@ function ff { if [ $1 ] ; then find . -type f | gg $1 ; fi }
 alias reload='source ~/.zshrc'
 alias vi='/home/fred.wong/bin/vim/src/vim'  # special override for vim7.4
 alias v='vi'
+alias vim='vi'
 alias vread='vi -R'
 alias vd='vi -d'
 alias vzsh='v ~/.zshrc'
 alias vimrc='v ~/.vimrc'
+alias vimrc.local='v ~/.vimrc.local'
 alias vtmx='v ~/.tmux.conf'
 alias vlog='v log/development.log'
 # alias vt='v -c :CommandT'

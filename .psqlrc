@@ -1,4 +1,4 @@
-\set QUIET  
+\set QUIET
 \set HISTFILE ~/.psql_history- :DBNAME
 \set HISTSIZE 2000
 \pset null 'NULL'
