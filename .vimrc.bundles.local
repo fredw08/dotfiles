@@ -1,7 +1,7 @@
-Bundle 'maciakl/vim-neatstatus'
 Bundle 'epeli/slimux'
 Bundle 'stephpy/vim-yaml'
-Bundle 'fholgado/minibufexpl.vim'
+" Bundle 'fholgado/minibufexpl.vim' " replaced by bufferline
 Bundle 'junegunn/vim-easy-align'
 Bundle 'flazz/vim-colorschemes'
-
+Bundle 'Lokaltog/vim-easymotion'
+Bundle 'bling/vim-airline'

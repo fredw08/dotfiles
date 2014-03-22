@@ -1,5 +1,3 @@
-set nocursorline " don't highlight current line
-
 " keyboard shortcuts
 inoremap jj <ESC>
 
@@ -39,6 +37,7 @@ silent! autocmd VimEnter * RemoveConflictingAlignMaps
 " -------------------
 " override setting
 " -------------------
+set cursorline
 " set nocompatible
 " set tabstop=2
 " set softtabstop=2
@@ -47,16 +46,16 @@ silent! autocmd VimEnter * RemoveConflictingAlignMaps
 " set nowritebackup
 " set showmatch
 if exists("&relativenumber") | set relativenumber | endif
+set nowrap
 " set number
 " set expandtab
 " set smarttab
-" set nowrap
 " set backspace=2
 " set incsearch
 " set ignorecase
 " set smartcase
 " set laststatus=2
-" set hidden
+set hidden
 " set title
 " set scrolloff=2
 " set smartindent
@@ -76,11 +75,17 @@ if exists("&relativenumber") | set relativenumber | endif
 " let g:ackprg="ack-grep -H --nocolor --nogroup --column"
 " let NERDSpaceDelims = 1
 " let Tlist_GainFocus_On_ToggleOpen = 1
-" " let g:airline#extensions#tabline#enabled = 1
-" " let g:airline#extensions#tabline#buffer_nr_show = 1
-" " let g:airline#extensions#tabline#fnamecollapse = 0
-" " let g:airline#extensions#tabline#fnamemod = ':p:t:.'
-" let g:airline_theme='bubblegum'
+let g:airline_theme='bubblegum'
+" let g:airline_theme='solarized'
+let g:airline#extensions#tabline#enabled        = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline#extensions#tabline#fnamecollapse  = 0
+let g:airline#extensions#tabline#fnamemod       = ':p:t:.'
+let g:airline_left_sep  = ''
+let g:airline_right_sep = ''
+let g:airline_section_x = ''
+let g:airline_section_y = ''
+let g:airline_section_z = airline#section#create_right(['%l','%c'])
 
 " -- override default ignore comment and string in vim-easy-align
 let g:easy_align_ignore_groups = []
@@ -91,11 +96,14 @@ let g:easy_align_ignore_groups = []
 " let g:ctrlp_working_path_mode = 0
 " let g:ctrlp_user_command      = 'ag %s -l --nocolor --hidden -g ""'
 
+let g:gitgutter_enabled = 1
+let NERDTreeQuitOnOpen  = 1
+
 " -------------------
 " autocmd
 " -------------------
 " autocmd BufRead,BufNewFile *.thor set filetype=ruby
-" autocmd BufWritePre * :%s/\s\+$//e
+autocmd BufWritePre * :%s/\s\+$//e
 
 " -------------------
 " Keyboard
@@ -107,9 +115,8 @@ let mapleader = ","
 " map <C-k> <C-w>k
 " map <C-l> <C-w>l
 map <leader>w <C-W>
+map <leader>= <C-W>=
 " map <leader>e :e <C-R>=expand("%:h") . "/"<CR>
-" map <leader>d :execute 'NERDTreeToggle'<CR>
-" map <leader>g :execute 'NERDTreeFind'<CR>
 " map <leader>c :TlistToggle<CR>
 
 nmap <silent> <leader>s :set nolist!<CR>
@@ -137,13 +144,13 @@ nnoremap <leader>l :buffers<CR>:buffer<Space>
 " nnoremap <leader>et :tabe <C-R>=expand('%:h').'/'<cr>
 
 " inoremap jj <Esc>
-" inoremap jk <Esc>
+inoremap jk <Esc>
 inoremap [d <C-R>=strftime("%Y%m%d")<CR>
 inoremap ]d <C-R>=strftime("%Y-%m-%d")<CR>
 
 " vnoremap / /\v
 
-" cabbrev q qa
+cabbrev q qa
 " cabbrev dt diffthis
 
 " -------------------
@@ -203,7 +210,7 @@ augroup END
 " Text color
 " -------------------
 syntax enable
-colorscheme kolor "badwolf
+colorscheme solarized "kolor badwolf
 set background=light
 " set background=dark
 " colorscheme solarized

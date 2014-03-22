@@ -97,7 +97,7 @@ function cc { wget -qO- "http://www.google.com/finance/converter?a=$1&from=$2&to
 # alias grep='ack-grep -i'
 # alias gg='grep'
 # alias ackri='gg'
-function ff { if [ $1 ] ; then find . -type f | gg $1 ; fi }
+function ff { if [ $1 ] ; then find . -type f | /usr/local/bin/ag $1 ; fi }
 
 alias reload='source ~/.zshrc'
 alias vi='/home/fred.wong/bin/vim/src/vim'  # special override for vim7.4
@@ -164,6 +164,9 @@ txpair () {
 alias 3620A='ssh 3620A'
 alias 3620B='ssh 3620B'
 alias 3620C='ssh 3620C'
+alias A='ssh 3620A'
+alias B='ssh 3620B'
+alias C='ssh 3620C'
 alias 7945A='ssh 7945A'
 
 alias rc='rails console'
@@ -279,7 +282,8 @@ kpu() {
 #alias spu='bundle exec puma -C config/puma.rb config.ru'
 alias spu='RAILS_RELATIVE_URL_ROOT=/nerv bundle exec puma -d -C config/puma.rb config.ru'
 alias spu2='RAILS_RELATIVE_URL_ROOT=/nerv2 bundle exec puma -d -C config/puma.rb config.ru'
-alias spu_debug='RAILS_RELATIVE_URL_ROOT=/nerv bundle exec puma -C config/puma_debug.rb'
+alias spu_debug='RAILS_RELATIVE_URL_ROOT=/nerv bundle exec puma -C bin/puma_debug.rb'
+alias spu2_debug='RAILS_RELATIVE_URL_ROOT=/nerv2 bundle exec puma -C bin/puma_debug.rb'
 
 # default cluster port
 # export PGPORT=5434

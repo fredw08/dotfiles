@@ -50,5 +50,10 @@
 
 [push]
   default = simple
+
+[core]
+  editor = '/home/fred.wong/bin/vim/src/vim'
+
+
 ; [core]
 ; pager = more
