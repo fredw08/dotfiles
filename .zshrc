@@ -42,10 +42,22 @@ export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/ga
 # [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
 # Chruby
-source /usr/local/share/chruby/chruby.sh
-source /usr/local/share/chruby/auto.sh
-# chruby 1.9.3-p392-perf
-chruby 2.0.0-p247
+# source /usr/local/share/chruby/chruby.sh
+# source /usr/local/share/chruby/auto.sh
+source ~/chruby-0.3.8/share/chruby/chruby.sh
+source ~/chruby-0.3.8/share/chruby/auto.sh
+# chruby 2.0.0-p247
+# chruby 2.1.0
+chruby 2.1.1
+
+
+# ssh alias
+alias work='ssh amoebaba'
+alias synergy='/Applications/Synergy.app/Contents/MacOS/Synergy &; disown %1;'
+alias vtask='v ~/Dropbox/01\ -\ Task.txt'
+alias vmin='v ~/Dropbox/03\ -\ meeting\ minutes.txt'
+alias vj='v ~/Dropbox/04\ -\ Journal.txt'
+
 
 # =====================================================
 # global alias
@@ -70,7 +82,10 @@ function h { cd ~/$1; }
 alias igs='p igs'
 alias igshk='p igshk'
 alias nerv='p nerv'
+alias n='nerv'
 alias nerv2='p nerv2'
+alias n2='nerv2'
+alias myk='p myk'
 alias caas='p caas'
 alias nervapi='p nerv-api'
 alias igshkfront='p igshkfrontend'
@@ -86,8 +101,10 @@ alias amoeba2='p amoeba_2'
 alias uat='p amoeba_uat'
 alias dotfiles='p dotfiles'
 alias et='RAILS_ENV=test'
+alias ep='RAILS_ENV=production'
 alias rruby='rescue=1 ruby'
 alias -g R='rescue=1'
+alias rubo='bundle exec rubocop'
 
 # newly added by fred (20110915)
 alias clr='clear'
@@ -97,24 +114,28 @@ function cc { wget -qO- "http://www.google.com/finance/converter?a=$1&from=$2&to
 # alias grep='ack-grep -i'
 # alias gg='grep'
 # alias ackri='gg'
-function ff { if [ $1 ] ; then find . -type f | /usr/local/bin/ag $1 ; fi }
+alias ag='/usr/bin/ag'
+function agp { ag "$@" app }
+function agv { ag "$@" app/views }
+function agm { ag "$@" app/models }
+function agc { ag "$@" app/controllers }
+function agt { ag "$@" test }
+function ff { if [ $1 ] ; then find . -type f | ag $1 ; fi }
 
 alias reload='source ~/.zshrc'
 # alias vi='/home/fred.wong/bin/vim/src/vim'  # special override for vim7.4
+# alias vim='/Applications/MacVim.app/Contents/MacOS/Vim'
+alias v='vim'
 alias vi='vim'
-alias v='vi'
-alias vim='vi'
 alias vread='vi -R'
 alias vd='vi -d'
 alias vzsh='v ~/.zshrc'
 alias vimrc='v ~/.vimrc'
 alias vimrc.local='v ~/.vimrc.local'
 alias vtmx='v ~/.tmux.conf'
-alias vlog='v log/development.log'
+# alias vlog='v log/development.log'
 # alias vt='v -c :CommandT'
 # alias vm='v -c :Rmigration'
-
-alias ag='/usr/local/bin/ag'
 
 # newly added by fred (20111007)
 function sql { psql igs_dev -c "$@" }
@@ -130,7 +151,7 @@ alias cr='chruby'
 function pug  { ps xo pid,user:10,cmd | sort | grep "$@" }
 
 # newly added by fred (20120405)
-function pf  { ps xo pid,user:10,cmd | grep fred | grep -v zsh }
+function pf  { ps xo pid,user:10,cmd | grep vagrant | grep -v zsh }
 
 alias tl='tail -f log/development.log'
 alias tl10='tail log/development.log --lines=10'
@@ -141,7 +162,17 @@ alias tml='tmux ls'
 function tmk { tmux kill-session -t "$@" }
 alias lc='rake log:clear'
 alias cl='cn log/development.log'
+alias clp='cn log/production.log'
+alias clt='cn log/test.log'
+alias calllog='cl && clp && clt'
 alias vl='vi log/development.log'
+alias vlt='vi log/test.log'
+alias clt='cn log/test.log'
+alias dr='rake db:reset'
+alias ds='rake db:seed'
+alias tp='rake test:prepare'
+alias cleanup='kpu; rake db:reset && rake test:prepare && spring stop'
+alias cu='cleanup'
 
 # for pair session
 # alias pair-a='tmux -S /tmp/pair a'
@@ -153,21 +184,18 @@ alias vl='vi log/development.log'
 #   fi
 #   tmux -S /tmp/pair attach -t pair;
 # }
-txpair () {
-        SOCKET=/home/share/tmux-pair/default
-        if ! tmux -S $SOCKET has-session -t pair 2> /dev/null
-        then
-                tmux -S $SOCKET new -s pair -d
-        fi
-        tmux -S $SOCKET attach -t pair
-}
+# txpair () {
+#         SOCKET=/home/share/tmux-pair/default
+#         if ! tmux -S $SOCKET has-session -t pair 2> /dev/null
+#         then
+#                 tmux -S $SOCKET new -s pair -d
+#         fi
+#         tmux -S $SOCKET attach -t pair
+# }
 
 alias 3620A='ssh 3620A'
 alias 3620B='ssh 3620B'
 alias 3620C='ssh 3620C'
-alias A='ssh 3620A'
-alias B='ssh 3620B'
-alias C='ssh 3620C'
 alias 7945A='ssh 7945A'
 
 alias rc='rails console'
@@ -187,9 +215,10 @@ alias gdh='git diff HEAD'
 alias gd='git diff'
 alias greset='git reset --hard'
 alias grpo='git remote prune origin'
+alias gcm='gc --amend'
 alias gcom='git checkout master'
 # alias glog="git log --graph --pretty=\"format:%C(yellow)%h%Cblue%d%Creset %s %C(green) %an, %ar%Creset\""
-alias glog="git log --graph --full-history --all --color --pretty=format:\"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s\""
+alias glog="git log -p --graph --all --color --pretty=format:\"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s\""
 
 # stash
 alias gsth='git stash list'
@@ -197,10 +226,14 @@ alias gsths='git stash save'
 alias gsthp='git stash pop'
 alias gsthd='git stash drop'
 alias gstha='git stash apply'
-function gsthw { git stash show stash@\{$@\} -p }
+# custom
+function gsthw  { git stash show  stash@\{$@\} -p }
+function gsthaa { git stash apply stash@\{$@\} }
+function gsthdd { git stash drop  stash@\{$@\} }
+function gsthpp { git stash pop   stash@\{$@\} }
 
 # name specific
-function tig { TERM=screen-256color /usr/bin/tig $@ }
+# function tig { TERM=screen-256color /usr/bin/tig $@ }
 alias tigfred='tig --author=fred.wong'
 alias tigall='tig --all'
 alias tiggodwin='tig --author=godwin.ko'
@@ -285,16 +318,21 @@ alias spu='RAILS_RELATIVE_URL_ROOT=/nerv bundle exec puma -d -C config/puma.rb c
 alias spu2='RAILS_RELATIVE_URL_ROOT=/nerv2 bundle exec puma -d -C config/puma.rb config.ru'
 alias spu_debug='RAILS_RELATIVE_URL_ROOT=/nerv bundle exec puma -C bin/puma_debug.rb'
 alias spu2_debug='RAILS_RELATIVE_URL_ROOT=/nerv2 bundle exec puma -C bin/puma_debug.rb'
+alias rpu='kpu && spu'
+alias rpu2='kpu && spu2'
+
+alias spuk='RAILS_RELATIVE_URL_ROOT=/myk bundle exec puma -d -C config/puma.rb config.ru'
+alias spukp='RAILS_RELATIVE_URL_ROOT=/myk bundle exec puma -d -C config/puma_production.rb config.ru'
 
 # default cluster port
 # export PGPORT=5434
 
 # newly added by fred (20120131) - for ruby performance
-export RUBY_HEAP_MIN_SLOTS=1000000
-export RUBY_HEAP_SLOTS_INCREMENT=1000000
-export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
-export RUBY_GC_MALLOC_LIMIT=1000000000
-export RUBY_HEAP_FREE_MIN=500000
+# export RUBY_HEAP_MIN_SLOTS=1000000
+# export RUBY_HEAP_SLOTS_INCREMENT=1000000
+# export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
+# export RUBY_GC_MALLOC_LIMIT=1000000000
+# export RUBY_HEAP_FREE_MIN=500000
 
 #####################################################
 # copy from alex (20120813)

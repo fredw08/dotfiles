@@ -74,6 +74,7 @@ set hidden
 " -- plugin setting
 " let g:ackprg="ack-grep -H --nocolor --nogroup --column"
 " let NERDSpaceDelims = 1
+let NERDTreeShowLineNumbers=1
 " let Tlist_GainFocus_On_ToggleOpen = 1
 let g:airline_theme='bubblegum'
 " let g:airline_theme='solarized'
@@ -86,6 +87,7 @@ let g:airline_right_sep = ''
 let g:airline_section_x = ''
 let g:airline_section_y = ''
 let g:airline_section_z = airline#section#create_right(['%l','%c'])
+
 
 " -- override default ignore comment and string in vim-easy-align
 let g:easy_align_ignore_groups = []
@@ -172,7 +174,7 @@ vmap <Enter> <Plug>(EasyAlign)
 " -------------------
 " Slimux
 " -------------------
-nmap <Leader>rb :SlimuxShellRun ruby -Itest <C-R>=expand("%:f")<CR><CR>
+nmap <Leader>rb :SlimuxShellRun ruby <C-R>=expand("%:f")<CR><CR>
 " nmap <Leader>rb :SlimuxShellRun rspec <C-R>=expand("%:f")<CR><CR>
 nmap <Leader>rl :SlimuxShellLast<CR>
 nmap <Leader>rc :SlimuxShellConfigure<CR>
@@ -210,7 +212,7 @@ augroup END
 " Text color
 " -------------------
 syntax enable
-colorscheme solarized "kolor badwolf
+colorscheme solarized "kolor
 set background=light
 " set background=dark
 " colorscheme solarized
@@ -256,6 +258,10 @@ set background=light
 " share vim settings
 if $TMUX =~ "pair"
   source /home/share/vimrc.share
+endif
+
+if $TMUX == ''
+  set clipboard+=unnamed
 endif
 
 " toggle between number and relativenumber
