@@ -227,7 +227,8 @@ alias gsthp='git stash pop'
 alias gsthd='git stash drop'
 alias gstha='git stash apply'
 # custom
-function gsthw  { git stash show  stash@\{$@\} -p }
+function gsthw  { git stash show -p }
+function gsthww { git stash show  stash@\{$@\} -p }
 function gsthaa { git stash apply stash@\{$@\} }
 function gsthdd { git stash drop  stash@\{$@\} }
 function gsthpp { git stash pop   stash@\{$@\} }
