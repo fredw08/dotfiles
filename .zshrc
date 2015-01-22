@@ -44,11 +44,12 @@ export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/ga
 # Chruby
 # source /usr/local/share/chruby/chruby.sh
 # source /usr/local/share/chruby/auto.sh
-source ~/chruby-0.3.8/share/chruby/chruby.sh
-source ~/chruby-0.3.8/share/chruby/auto.sh
+source ~/src/chruby/share/chruby/chruby.sh
+source ~/src/chruby/share/chruby/auto.sh
+
 # chruby 2.0.0-p247
 # chruby 2.1.0
-chruby 2.1.1
+chruby 2.1.5
 
 
 # ssh alias
@@ -151,7 +152,7 @@ alias cr='chruby'
 function pug  { ps xo pid,user:10,cmd | sort | grep "$@" }
 
 # newly added by fred (20120405)
-function pf  { ps xo pid,user:10,cmd | grep vagrant | grep -v zsh }
+function pf  { ps xo pid,user:10,cmd | grep vagrant | grep -v zsh | grep -v grep }
 
 alias tl='tail -f log/development.log'
 alias tl10='tail log/development.log --lines=10'
