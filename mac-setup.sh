@@ -48,7 +48,7 @@ brew cask install bettertouchtool
 brew cask install iterm2
 brew cask install dropbox
 brew cask install libreoffice
-brew cask install atomio
+brew cask install atom
 
 # optional
 brew cask install virtualbox
