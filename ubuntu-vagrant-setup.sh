@@ -76,6 +76,10 @@ cd /tmp
 wget http://nodejs.org/dist/v0.10.28/node-v0.10.28-linux-x64.tar.gz
 sudo cd /usr/local && tar --strip-components 1 -xzf /tmp/node-v0.10.28-linux-x64.tar.gz
 
+# set timezone
+sudo echo 'Asia/Hong_Kong' | sudo tee /etc/timezone
+sudo dpkg-reconfigure --frontend noninteractive tzdata
+
 # install ruby
 ruby-install ruby 2.1.5
 
