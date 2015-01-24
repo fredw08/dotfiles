@@ -29,7 +29,7 @@
   ; pager = true
 
 [tig]
-  show-rev-graph = yes
+  ; show-rev-graph = yes
   line-graphics = yes
   ; vertical-split = no
 
