@@ -1,12 +1,11 @@
-# ready private key before proceed
-# --------------------------------
+# required item
+# 1. keys
+# 2. git command
+# setup (private key)
 # mkdir .ssh/
 # copy id_rsa/id_rsa.public/config to .ssh/ folder
 # sudo chmod 600 ~/.ssh/id_rsa
-
-# first install required item
-sudo apt-get -y install build-essential git-core tig wget curl htop tmux \
-    rake exuberant-ctags vim-gtk silversearcher-ag zsh
+sudo apt-get -y install build-essential git-core
 
 # ready directory
 mkdir ~/project
@@ -19,15 +18,16 @@ git clone git://github.com/gmarik/vundle.git            ~/project/maximum-awesom
 curl -L http://install.ohmyz.sh | sh
 
 # link file
-ln -s ~/project/dotfiles/.zshrc               ~/.zshrc
-ln -s ~/project/dotfiles/fred.zsh-theme       ~/.oh-my-zsh/custom/fred.zsh-theme
-ln -s ~/project/maximum-awesome/vim           ~/.vim
-ln -s ~/project/maximum-awesome/vimrc         ~/.vimrc
-ln -s ~/project/maximum-awesome/vimrc.bundles ~/.vimrc.bundles
-ln -s ~/project/dotfiles/.vimrc.local         ~/.vimrc.local
-ln -s ~/project/dotfiles/.vimrc.bundles.local ~/.vimrc.bundles.local
-ln -s ~/project/dotfiles/.gitconfig           ~/.gitconfig
-ln -s ~/project/dotfiles/.tmux.conf           ~/.tmux.conf
+rm .zshrc
+ln -s ~/project/dotfiles/.zshrc                    ~/.zshrc
+ln -s ~/project/dotfiles/fred.zsh-theme.virtualbox ~/.oh-my-zsh/custom/fred.zsh-theme
+ln -s ~/project/maximum-awesome/vim                ~/.vim
+ln -s ~/project/maximum-awesome/vimrc              ~/.vimrc
+ln -s ~/project/maximum-awesome/vimrc.bundles      ~/.vimrc.bundles
+ln -s ~/project/dotfiles/.vimrc.local              ~/.vimrc.local
+ln -s ~/project/dotfiles/.vimrc.bundles.local      ~/.vimrc.bundles.local
+ln -s ~/project/dotfiles/.gitconfig                ~/.gitconfig
+ln -s ~/project/dotfiles/.tmux.conf                ~/.tmux.conf
 
 # make zsh as default
 chsh -s /bin/zsh vagrant
@@ -68,20 +68,18 @@ sudo make install
 cd /tmp
 wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-1.9.7-linux-x86_64.tar.bz2
 tar xvjf phantomjs-1.9.7-linux-x86_64.tar.bz2
-mv phantomjs-1.9.7-linux-x86_64 /usr/local/share/phantomjs
+sudo mv phantomjs-1.9.7-linux-x86_64 /usr/local/share/phantomjs
 sudo ln -s /usr/local/share/phantomjs/bin/phantomjs /usr/local/bin/phantomjs
 
 # nodejs
 cd /tmp
 wget http://nodejs.org/dist/v0.10.28/node-v0.10.28-linux-x64.tar.gz
-sudo cd /usr/local && tar --strip-components 1 -xzf /tmp/node-v0.10.28-linux-x64.tar.gz
+cd /usr/local
+sudo tar --strip-components 1 -xzf /tmp/node-v0.10.28-linux-x64.tar.gz
 
 # set timezone
 sudo echo 'Asia/Hong_Kong' | sudo tee /etc/timezone
 sudo dpkg-reconfigure --frontend noninteractive tzdata
-
-# install ruby
-ruby-install ruby 2.1.5
 
 # what's left (configuration)
 # vim
@@ -91,6 +89,12 @@ ruby-install ruby 2.1.5
 # > sudo su postgres
 # > createuser -s vagrant
 # edit /etc/postgresql/9.3/main/pg_hba.conf > all trust
+#
+# change hostname
+# sudo vi /etc/hostname
 
-
-
+# project specific
+# -------------------------------------
+# install ruby
+cd
+ruby-install ruby 2.1.5
