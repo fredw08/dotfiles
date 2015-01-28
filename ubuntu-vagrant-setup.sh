@@ -19,18 +19,18 @@ curl -L http://install.ohmyz.sh | sh
 
 # link file
 rm .zshrc
-ln -s ~/project/dotfiles/.zshrc                    ~/.zshrc
-ln -s ~/project/dotfiles/fred.zsh-theme.virtualbox ~/.oh-my-zsh/custom/fred.zsh-theme
-ln -s ~/project/maximum-awesome/vim                ~/.vim
-ln -s ~/project/maximum-awesome/vimrc              ~/.vimrc
-ln -s ~/project/maximum-awesome/vimrc.bundles      ~/.vimrc.bundles
-ln -s ~/project/dotfiles/.vimrc.local              ~/.vimrc.local
-ln -s ~/project/dotfiles/.vimrc.bundles.local      ~/.vimrc.bundles.local
-ln -s ~/project/dotfiles/.gitconfig                ~/.gitconfig
-ln -s ~/project/dotfiles/.tmux.conf                ~/.tmux.conf
+ln -s ~/project/dotfiles/.zshrc                         ~/.zshrc
+ln -s ~/project/dotfiles/fred.zsh-theme.vagrant-box     ~/.oh-my-zsh/custom/fred.zsh-theme
+ln -s ~/project/maximum-awesome/vim                     ~/.vim
+ln -s ~/project/maximum-awesome/vimrc                   ~/.vimrc
+ln -s ~/project/maximum-awesome/vimrc.bundles           ~/.vimrc.bundles
+ln -s ~/project/dotfiles/.vimrc.local                   ~/.vimrc.local
+ln -s ~/project/dotfiles/.vimrc.bundles.local           ~/.vimrc.bundles.local
+ln -s ~/project/dotfiles/.gitconfig                     ~/.gitconfig
+ln -s ~/project/dotfiles/.tmux.conf                     ~/.tmux.conf
 
 # make zsh as default
-chsh -s /bin/zsh vagrant
+sudo chsh -s /bin/zsh vagrant
 
 # install required dev soft for ubuntu 14.04
 # update package list
@@ -81,6 +81,21 @@ sudo tar --strip-components 1 -xzf /tmp/node-v0.10.28-linux-x64.tar.gz
 sudo echo 'Asia/Hong_Kong' | sudo tee /etc/timezone
 sudo dpkg-reconfigure --frontend noninteractive tzdata
 
+# update tmux version
+sudo apt-get install -y python-software-properties software-properties-common
+sudo add-apt-repository -y ppa:pi-rho/dev
+sudo apt-get update
+sudo apt-get install -y tmux=1.9a-1~ppa1~t
+
+# install java, pdftk/pdfinfo
+sudo apt-get install oracle-java7-installer
+sudo apt-get install pdftk
+sudo apt-get install poppler-utils
+
+# install ruby
+cd
+ruby-install ruby 2.1.5
+
 # what's left (configuration)
 # vim
 # > open vim and run :BundleInstall
@@ -92,9 +107,3 @@ sudo dpkg-reconfigure --frontend noninteractive tzdata
 #
 # change hostname
 # sudo vi /etc/hostname
-
-# project specific
-# -------------------------------------
-# install ruby
-cd
-ruby-install ruby 2.1.5

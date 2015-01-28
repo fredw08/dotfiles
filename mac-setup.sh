@@ -8,8 +8,8 @@
 ##############################################
 
 mkdir ~/project
-git clone https://github.com/fredw08/dotfiles.git       ~/project/
-git clone https://github.com/square/maximum-awesome.git ~/project/
+git clone https://github.com/fredw08/dotfiles.git       ~/project/dotfiles
+git clone https://github.com/square/maximum-awesome.git ~/project/maximum-awesome
 git clone git://github.com/gmarik/vundle.git            ~/project/maximum-awesome/vim/bundle/vundle
 
 # install oh-my-zsh
@@ -27,7 +27,7 @@ ln -s ~/project/dotfiles/.gitconfig           ~/.gitconfig
 ln -s ~/project/dotfiles/.tmux.conf           ~/.tmux.conf
 
 # make zsh as default
-chsh -s /bin/zsh
+sudo chsh -s /bin/zsh
 
 # what's left
 # open vim and run :BundleInstall
@@ -38,6 +38,7 @@ chsh -s /bin/zsh
 # install homebrew + cask
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew install caskroom/cask/brew-cask
+brew install tig
 
 # install minimum software
 brew install vim
