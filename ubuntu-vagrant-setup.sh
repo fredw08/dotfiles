@@ -18,7 +18,7 @@ git clone git://github.com/gmarik/vundle.git            ~/project/maximum-awesom
 curl -L http://install.ohmyz.sh | sh
 
 # link file
-rm .zshrc
+rm ~/.zshrc
 ln -s ~/project/dotfiles/.zshrc                         ~/.zshrc
 ln -s ~/project/dotfiles/fred.zsh-theme.vagrant-box     ~/.oh-my-zsh/custom/fred.zsh-theme
 ln -s ~/project/maximum-awesome/vim                     ~/.vim
@@ -36,9 +36,11 @@ sudo chsh -s /bin/zsh vagrant
 # update package list
 sed -i 's/archive\.ubuntu\.com/ftp\.cuhk\.edu\.hk\/pub\/Linux/g' /etc/apt/sources.list
 sed -i 's/security\.ubuntu\.com/ftp\.cuhk\.edu\.hk\/pub\/Linux/g' /etc/apt/sources.list
-sudo apt-get update
 
-sudo apt-get -y install python-software-properties
+sudo apt-get install -y python-software-properties software-properties-common
+sudo add-apt-repository -y ppa:pi-rho/dev
+sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update
 
 # setup proper locale
 locale-gen en_HK.utf8
@@ -81,22 +83,18 @@ sudo tar --strip-components 1 -xzf /tmp/node-v0.10.28-linux-x64.tar.gz
 sudo echo 'Asia/Hong_Kong' | sudo tee /etc/timezone
 sudo dpkg-reconfigure --frontend noninteractive tzdata
 
-# update tmux version
-sudo apt-get install -y python-software-properties software-properties-common
-sudo add-apt-repository -y ppa:pi-rho/dev
-sudo apt-get update
+# # install tools
 sudo apt-get install -y tmux=1.9a-1~ppa1~t
+sudo apt-get install -y pdftk
+sudo apt-get install -y poppler-utils
+sudo apt-get install -y oracle-java7-installer
 
-# install java, pdftk/pdfinfo
-sudo apt-get install oracle-java7-installer
-sudo apt-get install pdftk
-sudo apt-get install poppler-utils
-
-# install ruby
+# # install ruby
 cd
 ruby-install ruby 2.1.5
 
 # what's left (configuration)
+# -------------------------------------------------------------------
 # vim
 # > open vim and run :BundleInstall
 #
