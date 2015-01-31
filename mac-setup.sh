@@ -50,6 +50,7 @@ brew cask install iterm2
 brew cask install dropbox
 brew cask install libreoffice
 brew cask install atom
+brew cask install startninja
 
 # optional
 brew cask install virtualbox
