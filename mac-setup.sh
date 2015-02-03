@@ -55,4 +55,6 @@ brew cask install startninja
 # optional
 brew cask install virtualbox
 brew cask install vagrant
+brew cask install dash
+brew cask install skype
 
