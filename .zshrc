@@ -97,8 +97,10 @@ alias db='p db'
 alias cam='p amoeba.cam'
 alias ws='p amoeba.ws'
 alias amoeba='p amoeba'
+alias a='amoeba'
 alias amoeba_2='p amoeba_2'
 alias amoeba2='p amoeba_2'
+alias a2='amoeba2'
 alias uat='p amoeba_uat'
 alias dotfiles='p dotfiles'
 alias et='RAILS_ENV=test'
@@ -106,6 +108,13 @@ alias ep='RAILS_ENV=production'
 alias rruby='rescue=1 ruby'
 alias -g R='rescue=1'
 alias rubo='bundle exec rubocop'
+function restore_amoeba {
+  ku
+  psql -d postgres -c 'drop database amoeba_dev'
+  psql -d postgres -c 'create database amoeba_dev'
+  pg_restore -d amoeba_dev /vagrant/shared/amoeba_db.bak
+  ./bin/s
+}
 
 # newly added by fred (20110915)
 alias clr='clear'

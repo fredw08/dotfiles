@@ -213,6 +213,7 @@ augroup END
 " -------------------
 syntax enable
 colorscheme solarized "kolor
+" colorscheme kolor
 set background=light
 " set background=dark
 " colorscheme solarized
