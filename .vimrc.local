@@ -147,6 +147,7 @@ nnoremap <leader>l :buffers<CR>:buffer<Space>
 
 " inoremap jj <Esc>
 inoremap jk <Esc>
+inoremap ,, <Esc>
 inoremap [d <C-R>=strftime("%Y%m%d")<CR>
 inoremap ]d <C-R>=strftime("%Y-%m-%d")<CR>
 
@@ -212,9 +213,10 @@ augroup END
 " Text color
 " -------------------
 syntax enable
-colorscheme solarized "kolor
+colorscheme solarized
 " colorscheme kolor
-set background=light
+" colorscheme badwolf
+" set background=light
 " set background=dark
 " colorscheme solarized
 

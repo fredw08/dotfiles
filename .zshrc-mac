@@ -57,7 +57,8 @@ alias vk='v ~/Dropbox/mykitchen.txt +"normal gg" +vs +"normal ''z" +"normal j" +
 alias vg='v ~/Dropbox/game_dev.txt +"normal gg" +vs +"normal ''z" +"normal zt"'
 alias vbook='v ~/Dropbox/05\ -\ book\ ref.txt'
 alias vmin='v ~/Dropbox/03\ -\ meeting\ minutes.txt'
-alias vj='v ~/Dropbox/04\ -\ Journal.txt'
+# alias vj='v ~/Dropbox/04\ -\ Journal.txt'
+alias vj='v ~/Dropbox/04\ -\ Journal.txt +"normal gg" +vs +"normal ''z" +"normal j" +"normal zt"'
 
 alias vu='cd /Users/fred/vagrant; vagrant up'
 alias vs='cd /Users/fred/vagrant; vagrant suspend'
@@ -158,6 +159,10 @@ function tmk { tmux kill-session -t "$@" }
 alias lc='rake log:clear'
 alias cl='cn log/development.log'
 alias vl='vi log/development.log'
+# alias pairg="ssh -t ci-runner.abagile.com -p 7788 'ssh -p 22222 -t vagrant@localhost \"tmux attach\"'"
+# alias pairh="ssh -R 22222:localhost:22222 -t test.metisgl.com 'htop'"
+pairg() { ssh -t $1 ssh -p $2 -t vagrant@localhost 'tmux attach' }
+pairh() { ssh -R $2\:localhost:$2 -t $1 'htop' }
 
 # for pair session
 # alias pair-a='tmux -S /tmp/pair a'
@@ -305,7 +310,8 @@ alias spu_debug='RAILS_RELATIVE_URL_ROOT=/nerv bundle exec puma -C config/puma_d
 # export PGPORT=5434
 
 # newly added by fred (20120131) - for ruby performance
-export RUBY_HEAP_MIN_SLOTS=1000000
+export RUBY_GC_HEAP_FREE_SLOTS=1000000
+# export RUBY_HEAP_MIN_SLOTS=1000000
 export RUBY_HEAP_SLOTS_INCREMENT=1000000
 export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
 export RUBY_GC_MALLOC_LIMIT=1000000000
