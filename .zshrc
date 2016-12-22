@@ -86,6 +86,7 @@ alias nerv='p nerv'
 alias n='nerv'
 alias nerv2='p nerv2'
 alias n2='nerv2'
+alias cms='p metiscms'
 alias myk='p myk'
 alias caas='p caas'
 alias nervapi='p nerv-api'
@@ -171,9 +172,9 @@ alias tmn='tmux new'
 alias tml='tmux ls'
 function tmk { tmux kill-session -t "$@" }
 alias lc='rake log:clear'
-alias cl='cn log/development.log'
+alias cl='cn log/development.log; cn log/lograge_development.log'
 alias clp='cn log/production.log'
-alias clt='cn log/test.log'
+alias clt='cn log/test.log; cn log/lograge_test.log'
 alias calllog='cl && clp && clt'
 alias vl='vi log/development.log'
 alias vlt='vi log/test.log'
@@ -209,11 +210,16 @@ alias 3620C='ssh 3620C'
 alias 7945A='ssh 7945A'
 
 alias rc='rails console'
-alias mig='rake db:migrate'
+
+# alias migs='bundle exec rake db:migrate:status'
+# alias mig='bundle exec rake db:migrate'
+# alias roll='bundle exec rake db:rollback'
 alias migs='rake db:migrate:status'
+alias mig='rake db:migrate'
+alias roll='rake db:rollback'
+
 alias rmg='mig'
 alias rmgs='migs'
-alias roll='rake db:rollback'
 
 # zeus related
 alias z='zeus'
@@ -225,6 +231,7 @@ alias gdh='git diff HEAD'
 alias gd='git diff'
 alias greset='git reset --hard'
 alias grpo='git remote prune origin'
+alias glr='gl && grpo'
 alias gcm='gc --amend'
 alias gcom='git checkout master'
 # alias glog="git log --graph --pretty=\"format:%C(yellow)%h%Cblue%d%Creset %s %C(green) %an, %ar%Creset\""
@@ -252,6 +259,9 @@ alias tigcalvin='tig --author=calvin.leung'
 alias tigalex='tig --author=alex.au'
 alias tignash='tig --author=nash.yeung'
 alias tigsk='tig --author=sk.owyong'
+alias tigchiao='tig --author=chiao.chuang'
+alias tigazi='tig --author=azi.chen'
+alias tigspring='tig --author=spring'
 
 # from alex ----------------
 # new_hotfix () {
@@ -404,3 +414,18 @@ hotfiz() {
   echo -n "Done!"
 }
 
+cop() {
+  local extra_options='--display-cop-names --rails'
+  if [[ $# -gt 0 ]]; then
+    if git diff --name-only $@ -- **/*.(rb|jbuilder) > /dev/null; then
+      git diff --name-only $@ -- **/*.(rb|jbuilder) | xargs rubocop `echo $extra_options`
+    fi
+  else
+    local files="$(gst --porcelain -- **/*.(rb|jbuilder) | sed -e '/^\s\?[DRC] /d' -e 's/^.\{3\}//g')"
+    if [[ -n "$files" ]]; then
+      echo $files | xargs rubocop `echo $extra_options`
+    else
+      echo "Nothing to check. Write some *.(rb|jbuilder) to check.\nYou have 20 seconds to comply."
+    fi
+  fi
+}
