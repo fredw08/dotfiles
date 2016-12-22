@@ -172,7 +172,7 @@ alias tmn='tmux new'
 alias tml='tmux ls'
 function tmk { tmux kill-session -t "$@" }
 alias lc='rake log:clear'
-alias cl='cn log/development.log; cn log/lograge_development.log'
+alias cl='cn log/development.log; cn log/lograge_development.log; cn log/puma.log'
 alias clp='cn log/production.log'
 alias clt='cn log/test.log; cn log/lograge_test.log'
 alias calllog='cl && clp && clt'
