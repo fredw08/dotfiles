@@ -1,6 +1,8 @@
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 ZSH_THEME=$HOME
+USE_BOOTSNAP=1
+
 # [[ $TERM != "screen" ]] && tmux && exit  # default tmux
 
 # Set name of the theme to load.
@@ -42,15 +44,9 @@ export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/ga
 # [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
 # Chruby
-# source /usr/local/share/chruby/chruby.sh
-# source /usr/local/share/chruby/auto.sh
-source ~/src/chruby/share/chruby/chruby.sh
-source ~/src/chruby/share/chruby/auto.sh
-
-# chruby 2.0.0-p247
-# chruby 2.1.0
-chruby 2.1.5
-
+#source ~/src/chruby/share/chruby/chruby.sh
+#source ~/src/chruby/share/chruby/auto.sh
+#chruby 2.1.5
 
 # ssh alias
 alias work='ssh amoebaba'
@@ -107,6 +103,8 @@ alias dotfiles='p dotfiles'
 alias et='RAILS_ENV=test'
 alias ep='RAILS_ENV=production'
 alias rruby='rescue=1 ruby'
+alias bruby='bundle exec ruby'
+alias br='bruby'
 alias -g R='rescue=1'
 alias rubo='bundle exec rubocop'
 function restore_amoeba {
@@ -125,7 +123,7 @@ function cc { wget -qO- "http://www.google.com/finance/converter?a=$1&from=$2&to
 # alias grep='ack-grep -i'
 # alias gg='grep'
 # alias ackri='gg'
-alias ag='/usr/bin/ag'
+alias ag='/usr/bin/ag -i'
 function agp { ag "$@" app }
 function agv { ag "$@" app/views }
 function agm { ag "$@" app/models }
@@ -172,7 +170,7 @@ alias tmn='tmux new'
 alias tml='tmux ls'
 function tmk { tmux kill-session -t "$@" }
 alias lc='rake log:clear'
-alias cl='cn log/development.log; cn log/lograge_development.log; cn log/puma.log'
+alias cl='cn log/development.log; cn log/test.log; cn log/lograge_development.log; cn log/lograge_test.log; cn log/puma.log'
 alias clp='cn log/production.log'
 alias clt='cn log/test.log; cn log/lograge_test.log'
 alias calllog='cl && clp && clt'
@@ -234,8 +232,20 @@ alias grpo='git remote prune origin'
 alias glr='gl && grpo'
 alias gcm='gc --amend'
 alias gcom='git checkout master'
+alias gdm='gd master...'
 # alias glog="git log --graph --pretty=\"format:%C(yellow)%h%Cblue%d%Creset %s %C(green) %an, %ar%Creset\""
 alias glog="git log -p --graph --all --color --pretty=format:\"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s\""
+function gbdc {
+  local branchname=`gb | (grep \* | cut -d ' ' -f2-)`
+  gcom
+
+  echo "Are you sure want to delete local branch of $branchname? (y/n)"
+  read confirm
+
+  if [[ $confirm =~ "y|Y|yes|Yes" ]]; then
+  gb -D $branchname
+  fi
+}
 
 # stash
 alias gsth='git stash list'
@@ -262,6 +272,7 @@ alias tigsk='tig --author=sk.owyong'
 alias tigchiao='tig --author=chiao.chuang'
 alias tigazi='tig --author=azi.chen'
 alias tigspring='tig --author=spring'
+alias tigtim='tig --author=tim'
 
 # from alex ----------------
 # new_hotfix () {
@@ -429,3 +440,7 @@ cop() {
     fi
   fi
 }
+
+. $HOME/.asdf/asdf.sh
+
+. $HOME/.asdf/completions/asdf.bash
