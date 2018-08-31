@@ -106,7 +106,7 @@ let NERDTreeQuitOnOpen  = 1
 " autocmd
 " -------------------
 " autocmd BufRead,BufNewFile *.thor set filetype=ruby
-autocmd BufWritePre * :%s/\s\+$//e
+" autocmd BufWritePre * :%s/\s\+$//e
 
 " -------------------
 " Keyboard
@@ -297,7 +297,7 @@ function! s:rails_test_helpers() "{{{
   end
 endfunction "}}}
 
-autocmd User Rails call s:rails_test_helpers()
+" autocmd User Rails call s:rails_test_helpers()
 
 function! s:rails_test_tmux(method) "{{{
   let [it, path] = ['', '']

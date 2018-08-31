@@ -10,7 +10,7 @@
 mkdir ~/project
 git clone https://github.com/fredw08/dotfiles.git       ~/project/dotfiles
 git clone https://github.com/square/maximum-awesome.git ~/project/maximum-awesome
-git clone git://github.com/gmarik/vundle.git            ~/project/maximum-awesome/vim/bundle/vundle
+git clone https://github.com/VundleVim/Vundle.vim.git   ~/.vim/bundle/Vundle.vim
 
 # install oh-my-zsh
 curl -L http://install.ohmyz.sh | sh

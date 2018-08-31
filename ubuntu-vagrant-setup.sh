@@ -68,30 +68,30 @@ sudo make install
 
 # phantomjs
 cd /tmp
-wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-1.9.7-linux-x86_64.tar.bz2
-tar xvjf phantomjs-1.9.7-linux-x86_64.tar.bz2
-sudo mv phantomjs-1.9.7-linux-x86_64 /usr/local/share/phantomjs
+wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2
+tar xvjf phantomjs-2.1.1-linux-x86_64.tar.bz2
+sudo mv phantomjs-2.1.1-linux-x86_64 /usr/local/share/phantomjs
 sudo ln -s /usr/local/share/phantomjs/bin/phantomjs /usr/local/bin/phantomjs
 
 # nodejs
-cd /tmp
-wget http://nodejs.org/dist/v0.10.28/node-v0.10.28-linux-x64.tar.gz
-cd /usr/local
-sudo tar --strip-components 1 -xzf /tmp/node-v0.10.28-linux-x64.tar.gz
+# cd /tmp
+# wget http://nodejs.org/dist/v0.10.28/node-v0.10.28-linux-x64.tar.gz
+# cd /usr/local
+# sudo tar --strip-components 1 -xzf /tmp/node-v0.10.28-linux-x64.tar.gz
 
 # set timezone
 sudo echo 'Asia/Hong_Kong' | sudo tee /etc/timezone
 sudo dpkg-reconfigure --frontend noninteractive tzdata
 
 # # install tools
-sudo apt-get install -y tmux=1.9a-1~ppa1~t
+# sudo apt-get install -y tmux=1.9a-1~ppa1~t
 sudo apt-get install -y pdftk
 sudo apt-get install -y poppler-utils
 sudo apt-get install -y oracle-java7-installer
 
 # # install ruby
 cd
-ruby-install ruby 2.1.5
+ruby-install ruby 2.3.1
 
 # what's left (configuration)
 # -------------------------------------------------------------------

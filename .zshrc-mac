@@ -50,7 +50,10 @@ export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/ga
 setopt rcquotes
 # ssh alias
 alias work='ssh amoebaba'
-alias lw='ssh local'
+# alias lw='ssh local'
+alias lw='vagrant ssh'
+alias vss='vagrant ssh'
+alias lwcms='ssh local-cms'
 alias synergy='/Applications/Synergy.app/Contents/MacOS/Synergy &; disown %1;'
 alias vt='v ~/Dropbox/01\ -\ Task.txt +"normal gg" +vs +"normal ''z" +"normal j" +"normal zt"'
 alias vk='v ~/Dropbox/mykitchen.txt +"normal gg" +vs +"normal ''z" +"normal j" +"normal zt"'
@@ -60,9 +63,13 @@ alias vmin='v ~/Dropbox/03\ -\ meeting\ minutes.txt'
 # alias vj='v ~/Dropbox/04\ -\ Journal.txt'
 alias vj='v ~/Dropbox/04\ -\ Journal.txt +"normal gg" +vs +"normal ''z" +"normal j" +"normal zt"'
 
-alias vu='cd /Users/fred/vagrant; vagrant up'
-alias vs='cd /Users/fred/vagrant; vagrant suspend'
-alias vr='cd /Users/fred/vagrant; vagrant reload'
+# alias vu='cd /Users/fredwong/vagrant; vagrant up'
+# alias vs='cd /Users/fredwong/vagrant; vagrant suspend'
+# alias vr='cd /Users/fredwong/vagrant; vagrant reload'
+
+alias vu='cd /Users/fredwong/project/vm; vagrant up'
+alias vs='cd /Users/fredwong/project/vm; vagrant suspend'
+alias vr='cd /Users/fredwong/project/vm; vagrant reload'
 
 # =====================================================
 # global alias
@@ -84,6 +91,7 @@ function p { cd ~/project/$1; }
 function h { cd ~/$1; }
 
 # project related
+alias vm='p vm'
 alias igs='p igs'
 alias igshk='p igshk'
 alias nerv='p nerv'
@@ -161,8 +169,12 @@ alias cl='cn log/development.log'
 alias vl='vi log/development.log'
 # alias pairg="ssh -t ci-runner.abagile.com -p 7788 'ssh -p 22222 -t vagrant@localhost \"tmux attach\"'"
 # alias pairh="ssh -R 22222:localhost:22222 -t test.metisgl.com 'htop'"
-pairg() { ssh -t $1 ssh -p $2 -t vagrant@localhost 'tmux attach' }
-pairh() { ssh -R $2\:localhost:$2 -t $1 'htop' }
+
+pairh() { ssh -S none -o 'ExitOnForwardFailure=yes' -R $2\:localhost:22222 -t $1 'watch -en 10 who' }
+pairg()  { ssh -t $1 ssh -p $2 -t vagrant@localhost 'tmux attach' }
+
+# pairh()  { ssh -R $2\:localhost:22222 -t $1 'top' }
+# tunnel() { ssh -R $3\:localhost:$2    -t $1 'top' }
 
 # for pair session
 # alias pair-a='tmux -S /tmp/pair a'
